@@ -7,16 +7,16 @@
 #
 # [*reponame*]
 #   Name of the repository. This must be unique, as it's used for the name of
-#   the repository directory.
+#   the repository directory. Defaults to $title, i.e. name of the resource.
 # [*description*]
-#   Description of this repository.
+#   Description of this repository. Defaults to 'No description'.
 # [*gpg_key_id*]
 #   ID of the GPG key used for signing the packages. Defaults to top-scope
 #   variable $::rpm_gpg_key_id.
 #
 define createrepo::repo(
-    $reponame,
-    $description,
+    $reponame=$title,
+    $description='No description',
     $gpg_key_id=$::rpm_gpg_key_id
 )
 {
