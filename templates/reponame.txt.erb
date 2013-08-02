@@ -1,0 +1,16 @@
+ADDING THE REPOSITORY FILE
+
+You also need to download a yum repo file so that yum can find these packages:
+
+$ cd /etc/yum.repos.d
+$ wget http://<%= fqdn %>/repos/yum/conf/<%= fqdn %>-<%= reponame %>.repo
+
+
+INSTALLING PACKAGES
+
+In most cases, this is as simple as
+
+$ yum install <packagename>
+
+You need to allow importing the repository's public GPG key when you tells you 
+to.
