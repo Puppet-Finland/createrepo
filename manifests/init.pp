@@ -5,6 +5,10 @@
 #
 # == Parameters
 #
+# [*documentroot*]
+#   Web server's document root directory. Defaults to 
+#   $::softwarerepo::config::documentroot, which defaults to 
+#   $::webserver::config::documentroot, which is '/var/www' by default.
 # [*configure_webserver*]
 #   Select which webserver to configure. Valid values are 'apache2', 'nginx' and
 #   'false' (don't configure). Currently the value 'nginx' does nothing.
@@ -28,11 +32,15 @@
 #
 class createrepo
 (
+    $documentroot=$::softwarerepo::config::documentroot,
     $configure_webserver='false'
 )
 {
     include createrepo::install
-    include createrepo::config
+
+    class { 'createrepo::config':
+        documentroot => "${documentroot}",
+    }
 
     if $configure_webserver == 'apache2' {
         include createrepo::config::apache2

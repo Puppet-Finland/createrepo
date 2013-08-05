@@ -5,6 +5,9 @@
 #
 # == Parameters
 #
+# [*documentroot*]
+#   Web server's document root directory. Defaults to 
+#   $::createrepo::config::documentroot.
 # [*reponame*]
 #   Name of the repository. This must be unique, as it's used for the name of
 #   the repository directory. Defaults to $title, i.e. name of the resource.
@@ -15,13 +18,14 @@
 #   variable $::rpm_gpg_key_id.
 #
 define createrepo::repo(
+    $documentroot=$::createrepo::config::documentroot,
     $reponame=$title,
     $description='No description',
     $gpg_key_id=$::rpm_gpg_key_id
 )
 {
     file { "createrepo-${reponame}":
-        name => "/var/www/repos/yum/${reponame}",
+        name => "${documentroot}/repos/yum/${reponame}",
         ensure => directory,
         owner => root,
         group => root,
@@ -30,7 +34,7 @@ define createrepo::repo(
     }
 
     file { "createrepo-${reponame}.repo":
-        name => "/var/www/repos/yum/conf/${fqdn}-${reponame}.repo",
+        name => "${documentroot}/repos/yum/conf/${fqdn}-${reponame}.repo",
         content => template('createrepo/reponame.repo.erb'),
         ensure => present,
         owner => root,
@@ -40,7 +44,7 @@ define createrepo::repo(
     }
 
     file { "createrepo-${reponame}.txt":
-        name => "/var/www/repos/yum/conf/${fqdn}-${reponame}.txt",
+        name => "${documentroot}/repos/yum/conf/${fqdn}-${reponame}.txt",
         ensure => present,
         content => template('createrepo/reponame.txt.erb'),
         owner => root,

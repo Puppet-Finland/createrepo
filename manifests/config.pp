@@ -3,9 +3,9 @@
 #
 # Configure createrepo
 #
-class createrepo::config {
+class createrepo::config($documentroot) {
 
-    file { [ '/var/www/repos/yum', '/var/www/repos/yum/conf' ]:
+    file { [ "${documentroot}/repos/yum", "${documentroot}/repos/yum/conf" ]:
         ensure => directory,
         require => Class['softwarerepo::install']
     }
