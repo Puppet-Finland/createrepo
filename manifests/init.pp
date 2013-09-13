@@ -36,6 +36,9 @@ class createrepo
     $configure_webserver='false'
 )
 {
+# Rationale for this is explained in init.pp of the sshd module
+if hiera('manage_createrepo') != 'false' {
+
     include createrepo::install
 
     class { 'createrepo::config':
@@ -45,4 +48,5 @@ class createrepo
     if $configure_webserver == 'apache2' {
         include createrepo::config::apache2
     }
+}
 }
