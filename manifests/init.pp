@@ -37,7 +37,7 @@ class createrepo
 )
 {
 # Rationale for this is explained in init.pp of the sshd module
-if hiera('manage_createrepo') != 'false' {
+if hiera('manage_createrepo', 'true') != 'false' {
 
     include createrepo::install
 
