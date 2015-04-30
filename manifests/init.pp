@@ -33,20 +33,20 @@
 class createrepo
 (
     $documentroot=$::softwarerepo::config::documentroot,
-    $configure_webserver='false'
+    $configure_webserver=false
 )
 {
 # Rationale for this is explained in init.pp of the sshd module
-if hiera('manage_createrepo', 'true') != 'false' {
+if hiera('manage_createrepo', true) != false {
 
-    include createrepo::install
+    include ::createrepo::install
 
-    class { 'createrepo::config':
-        documentroot => "${documentroot}",
+    class { '::createrepo::config':
+        documentroot => $documentroot,
     }
 
     if $configure_webserver == 'apache2' {
-        include createrepo::config::apache2
+        include ::createrepo::config::apache2
     }
 }
 }

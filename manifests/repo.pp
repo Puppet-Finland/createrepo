@@ -25,31 +25,31 @@ define createrepo::repo(
 )
 {
     file { "createrepo-${reponame}":
-        name => "${documentroot}/repos/yum/${reponame}",
-        ensure => directory,
-        owner => root,
-        group => root,
-        mode => 755,
+        ensure  => directory,
+        name    => "${documentroot}/repos/yum/${reponame}",
+        owner   => root,
+        group   => root,
+        mode    => '0755',
         require => Class['createrepo::config'],
     }
 
     file { "createrepo-${reponame}.repo":
-        name => "${documentroot}/repos/yum/conf/${fqdn}-${reponame}.repo",
+        ensure  => present,
+        name    => "${documentroot}/repos/yum/conf/${::fqdn}-${reponame}.repo",
         content => template('createrepo/reponame.repo.erb'),
-        ensure => present,
-        owner => root,
-        group => root,
-        mode => 644,
+        owner   => root,
+        group   => root,
+        mode    => '0644',
         require => Class['createrepo::config'],
     }
 
     file { "createrepo-${reponame}.txt":
-        name => "${documentroot}/repos/yum/conf/${fqdn}-${reponame}.txt",
-        ensure => present,
+        ensure  => present,
+        name    => "${documentroot}/repos/yum/conf/${::fqdn}-${reponame}.txt",
         content => template('createrepo/reponame.txt.erb'),
-        owner => root,
-        group => root,
-        mode => 644,
+        owner   => root,
+        group   => root,
+        mode    => '0644',
         require => Class['createrepo::config'],
     }
 }

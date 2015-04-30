@@ -6,7 +6,7 @@
 class createrepo::install {
 
     package { 'createrepo-createrepo':
-        name => 'createrepo',
         ensure => installed,
+        name   => 'createrepo',
     }
 }

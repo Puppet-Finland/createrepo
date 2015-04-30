@@ -7,13 +7,13 @@ class createrepo::config::apache2 {
 
     # Install an Apache2 configuration file fragment for createrepo
     file { 'createrepo-createrepo':
-        name => '/etc/apache2/conf.d/createrepo',
-        ensure => present,
+        ensure  => present,
+        name    => '/etc/apache2/conf.d/createrepo',
         content => template('createrepo/createrepo.erb'),
-        owner => root,
-        group => root,
-        mode => 644,
+        owner   => root,
+        group   => root,
+        mode    => '0644',
         require => Class['apache2::install'],
-        notify => Class['apache2::service'],
+        notify  => Class['apache2::service'],
     }
 }
